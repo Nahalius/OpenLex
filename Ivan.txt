@@ -1,0 +1,42 @@
+Свършени неща от мен за хакатона и свързани с проекта ОпенЛекс
+
+1.Как да обединиш много PDF файлове в един TXT файл.
+for file in *.pdf; do pdftotext "$file" "obsht_file.txt"; done
+
+
+
+2. Анализ на най-срещаните думи във всички обнародвани закони през 2017 г.
+
+https://drive.google.com/drive/folders/1IakiqWbVQ_ucIAyw4XZymcnOn3ZzTWMH?usp=sharing
+
+
+3.Питонски скрипт за четене на PDF файлове, ако някой иска после да ги манипулира Питонски
+
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import glob
+import subprocess
+from os import path
+from wordcloud import WordCloud
+
+pdf_files = glob.glob("PDF/*.pdf")
+
+def cmd_output(cmd):
+        global BUFSIZE
+        proc = subprocess.Popen(cmd.split(" "), shell = False, bufsize=4096, stdout=subprocess.PIPE)
+        pipe = proc.stdout
+        data = pipe.read().strip()
+        pipe.close()
+        proc.wait()
+        return data
+
+laws = cmd_output("pdftotext 5_18.pdf -")
+
+#for file in *.pdf; do pdftotext "$file" "$file.txt"; done    #bash implementation
+
+
+file = open("testfile.txt","wb")
+file.write(laws)
+file.close()
